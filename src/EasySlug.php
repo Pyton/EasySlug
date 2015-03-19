@@ -104,7 +104,7 @@ class EasySlug
         $this->replacement = $replacement;
     }
 
-    public function getSecureReplacement()
+    protected function getSecureReplacement()
     {
         return addcslashes($this->replacement, '\^$.[]|()?*+{}');
     }
