@@ -29,8 +29,18 @@ class EasySlug
         'ż' => 'z',
     );
 
+    /**
+     * Default slug char replacement
+     *
+     * @var string
+     */
     protected $replacement = '-';
 
+    /**
+     * Default char which would be replaced
+     *
+     * @var string
+     */
     protected $replacing = ' ';
 
     /**
