@@ -1,33 +1,8 @@
-<?php
+<?php namespace EasySlug;
 
 class EasySlug
 {
-    /**
-     * Set of replacements
-     *
-     * @var array
-     */
-    protected $rules = array(
-        // Polish
-        'Ą' => 'A',
-        'Ć' => 'C',
-        'Ę' => 'E',
-        'Ł' => 'L',
-        'Ń' => 'N',
-        'Ó' => 'O',
-        'Ś' => 'S',
-        'Ź' => 'Z',
-        'Ż' => 'Z',
-        'ą' => 'a',
-        'ć' => 'c',
-        'ę' => 'e',
-        'ł' => 'l',
-        'ń' => 'n',
-        'ó' => 'o',
-        'ś' => 's',
-        'ź' => 'z',
-        'ż' => 'z',
-    );
+
 
     /**
      * Default slug char replacement
@@ -50,6 +25,11 @@ class EasySlug
      */
     protected $text = '';
 
+    function __construct()
+    {
+        $this->ruleManager = new RuleManager();
+    }
+
     /**
      * Create slug based on standard rules
      *
@@ -59,9 +39,9 @@ class EasySlug
      */
     public function create($text)
     {
-        $this->text = strtolower(strtr($text, $this->rules));
+        $this->text = $this->ruleManager->applyRules($text);
 
-        $this->text = preg_replace('/[^a-z0-9]/', $this->replacement, $this->text);
+        $this->text = preg_replace('/[^a-z0-9]/i', $this->replacement, $this->text);
         $this->text = preg_replace("/[{$this->replacing}]+/", $this->replacement, $this->text);
         $this->text = preg_replace('/('.$this->getSecureReplacement().')+/', $this->replacement, $this->text);
 
@@ -108,4 +88,6 @@ class EasySlug
     {
         return addcslashes($this->replacement, '\^$.[]|()?*+{}');
     }
+
+
 }
