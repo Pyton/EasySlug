@@ -22,7 +22,8 @@ class EasySlugSpec extends ObjectBehavior
         $this->create('To jest slug')->format()->shouldReturn('to-jest-slug');
         $this->create('To   jest   slug')->format()->shouldReturn('to-jest-slug');
         $this->create('To --  jest --  slug')->format()->shouldReturn('to-jest-slug');
-        $this->it_should_returns_slug_without_special_chars();
+
+        $this->create('To --  jest --  slug')->plain()->shouldReturn('to-jest-slug');
     }
 
     public function it_should_returns_slug_without_special_chars()
@@ -38,5 +39,15 @@ class EasySlugSpec extends ObjectBehavior
         $this->create('To jest slug')->format('%s-%d.html', [11])->shouldReturn('to-jest-slug-11.html');
     }
 
+    function it_should_return_slug_with_custom_replacement()
+    {
+        $this->setReplacement('_');
+        $this->create('Tó i ówdzię jeśliś Slugiem')->format()->shouldReturn('to_i_owdzie_jeslis_slugiem');
 
+        $this->setReplacement('~~');
+        $this->create('Tó i ówdzię jeśliś Slugiem')->format()->shouldReturn('to~~i~~owdzie~~jeslis~~slugiem');
+
+        $this->setReplacement('+');
+        $this->create('Tó i ówdzię jeśliś Slugiem')->format()->shouldReturn('to+i+owdzie+jeslis+slugiem');
+    }
 }

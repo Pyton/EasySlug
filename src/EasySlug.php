@@ -50,9 +50,11 @@ class EasySlug
     public function create($text)
     {
         $this->text = strtolower(strtr($text, $this->rules));
+
         $this->text = preg_replace('/[^a-z0-9]/', $this->replacement, $this->text);
         $this->text = preg_replace("/[{$this->replacing}]+/", $this->replacement, $this->text);
-        $this->text = preg_replace("/{$this->replacement}+/", $this->replacement, $this->text);
+        $this->text = preg_replace('/('.$this->getSecureReplacement().')+/', $this->replacement, $this->text);
+
         $this->text = trim($this->text, " $this->replacement");
 
         return $this;
@@ -63,7 +65,7 @@ class EasySlug
      *
      * @return mixed
      */
-    public function getPlain()
+    public function plain()
     {
         return $this->text;
     }
@@ -89,6 +91,11 @@ class EasySlug
      */
     public function setReplacement($replacement)
     {
-        $this->replacement = addcslashes($replacement, '\^$.[]|()?*+{}');
+        $this->replacement = $replacement;
+    }
+
+    public function getSecureReplacement()
+    {
+        return addcslashes($this->replacement, '\^$.[]|()?*+{}');
     }
 }
