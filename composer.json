@@ -1,0 +1,21 @@
+{
+    "name": "pyton/easyslug",
+    "description": "Simple class making slug",
+    "authors": [
+        {
+            "name": "Łukasz Piotrowski",
+            "email": "lukasz@piotrows.pl"
+        }
+    ],
+    "require": {
+        "php" : ">=5.3.0"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "~2.1"
+    },
+    "autoload": {
+        "psr-0": {
+            "": "src"
+        }
+    }
+}

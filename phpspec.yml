@@ -1,0 +1,5 @@
+suites:
+    default:
+        spec_prefix: tests
+
+formatter.name: pretty
