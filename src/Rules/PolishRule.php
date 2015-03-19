@@ -1,10 +1,10 @@
 <?php namespace EasySlug\Rules;
 
-class PolishRule extends RuleContract {
+class PolishRule extends RuleContract
+{
 
     /**
      * Set of replacements
-     *
      * @var array
      */
     protected $rules = array(

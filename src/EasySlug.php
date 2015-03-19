@@ -3,24 +3,20 @@
 class EasySlug
 {
 
-
     /**
      * Default slug char replacement
-     *
      * @var string
      */
     protected $replacement = '-';
 
     /**
      * Default char which would be replaced
-     *
      * @var string
      */
     protected $replacing = ' ';
 
     /**
      * Output text
-     *
      * @var
      */
     protected $text = '';
@@ -43,16 +39,20 @@ class EasySlug
 
         $this->text = preg_replace('/[^a-z0-9]/i', $this->replacement, $this->text);
         $this->text = preg_replace("/[{$this->replacing}]+/", $this->replacement, $this->text);
-        $this->text = preg_replace('/('.$this->getSecureReplacement().')+/', $this->replacement, $this->text);
+        $this->text = preg_replace('/(' . $this->getSecureReplacement() . ')+/', $this->replacement, $this->text);
 
         $this->text = trim($this->text, " $this->replacement");
 
         return $this;
     }
 
+    protected function getSecureReplacement()
+    {
+        return addcslashes($this->replacement, '\^$.[]|()?*+{}');
+    }
+
     /**
      * Returns plain slug
-     *
      * @return mixed
      */
     public function plain()
@@ -71,6 +71,7 @@ class EasySlug
     public function format($format = '%s', $arguments = array())
     {
         array_unshift($arguments, $this->text);
+
         return vsprintf($format, $arguments);
     }
 
@@ -82,11 +83,6 @@ class EasySlug
     public function setReplacement($replacement)
     {
         $this->replacement = $replacement;
-    }
-
-    protected function getSecureReplacement()
-    {
-        return addcslashes($this->replacement, '\^$.[]|()?*+{}');
     }
 
 
