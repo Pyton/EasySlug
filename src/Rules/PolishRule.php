@@ -29,6 +29,9 @@ class PolishRule extends RuleContract
         'ż' => 'z',
     );
 
+    /**
+     * Set rules to parent class
+     */
     public function __construct()
     {
         parent::__construct($this->rules);

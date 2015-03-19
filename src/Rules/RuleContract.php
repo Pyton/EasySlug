@@ -7,6 +7,11 @@ class RuleContract
 {
     protected $rules = array();
 
+    /**
+     * Gets rules and merge it
+     *
+     * @param array $rules
+     */
     public function __construct($rules = array())
     {
         $this->rules = $rules;
