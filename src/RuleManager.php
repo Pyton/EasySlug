@@ -8,7 +8,7 @@ class RuleManager
     {
         foreach ($this->getLanguageRules() as $ruleName => $file)
         {
-            $objectName = 'EasySlug\Rules\\' . $ruleName;
+            $objectName = 'EasySlug\\Rules\\' . $ruleName;
             $ruleSet = new $objectName();
             $text = $ruleSet->execute($text);
 
@@ -28,7 +28,6 @@ class RuleManager
             $this->rules[basename($ruleFile, '.php')] = $ruleFile;
         }
 
-        //echo '<pre>'; var_dump($this->rules); echo'</pre>';die(__FILE__ . ': '.__LINE__);
         return $this->rules;
     }
 }

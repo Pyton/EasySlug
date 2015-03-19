@@ -21,6 +21,22 @@ class EasySlug
      */
     protected $text = '';
 
+    /**
+     * List of allowed characters in slug saved in Preg_replace notation
+     *
+     * @var string
+     */
+    protected $allowedCharacters = 'A-Za-z0-9';
+
+    /**
+     * Rule Manager Object
+     * @var RuleManager|null
+     */
+    protected $ruleManager = null;
+
+    /**
+     * Construct class with RuleManager
+     */
     function __construct()
     {
         $this->ruleManager = new RuleManager();
@@ -36,13 +52,18 @@ class EasySlug
     public function create($text)
     {
         $this->text = $this->ruleManager->applyRules($text);
-
-        $this->text = preg_replace('/[^a-z0-9]/i', $this->replacement, $this->text);
-        $this->text = preg_replace("/[{$this->replacing}]+/", $this->replacement, $this->text);
-        $this->text = preg_replace('/(' . $this->getSecureReplacement() . ')+/', $this->replacement, $this->text);
+        $pregReplacePatterns = array(
+            "/[^{$this->allowedCharacters}]/",
+            "/[{$this->replacing}]+/",
+            '/(' . $this->getSecureReplacement() . ')+/'
+        );
+        foreach($pregReplacePatterns as $pattern)
+        {
+            $this->text = preg_replace($pattern, $this->replacement, $this->text);
+        }
 
         $this->text = trim($this->text, " $this->replacement");
-
+        
         return $this;
     }
 
@@ -53,6 +74,7 @@ class EasySlug
 
     /**
      * Returns plain slug
+     *
      * @return mixed
      */
     public function plain()
