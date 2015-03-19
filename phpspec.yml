@@ -1,5 +1,7 @@
 suites:
     default:
         spec_prefix: tests
+        namespace: EasySlug
+        psr4_prefix: EasySlug
 
 formatter.name: pretty

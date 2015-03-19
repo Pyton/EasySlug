@@ -1,54 +1,46 @@
-<?php
+<?php namespace EasySlug;
 
 class EasySlug
 {
-    /**
-     * Set of replacements
-     *
-     * @var array
-     */
-    protected $rules = array(
-        // Polish
-        'Ą' => 'A',
-        'Ć' => 'C',
-        'Ę' => 'E',
-        'Ł' => 'L',
-        'Ń' => 'N',
-        'Ó' => 'O',
-        'Ś' => 'S',
-        'Ź' => 'Z',
-        'Ż' => 'Z',
-        'ą' => 'a',
-        'ć' => 'c',
-        'ę' => 'e',
-        'ł' => 'l',
-        'ń' => 'n',
-        'ó' => 'o',
-        'ś' => 's',
-        'ź' => 'z',
-        'ż' => 'z',
-    );
 
     /**
      * Default slug char replacement
-     *
      * @var string
      */
     protected $replacement = '-';
 
     /**
      * Default char which would be replaced
-     *
      * @var string
      */
     protected $replacing = ' ';
 
     /**
      * Output text
-     *
      * @var
      */
     protected $text = '';
+
+    /**
+     * List of allowed characters in slug saved in Preg_replace notation
+     *
+     * @var string
+     */
+    protected $allowedCharacters = 'A-Za-z0-9';
+
+    /**
+     * Rule Manager Object
+     * @var RuleManager|null
+     */
+    protected $ruleManager = null;
+
+    /**
+     * Construct class with RuleManager
+     */
+    function __construct()
+    {
+        $this->ruleManager = new RuleManager();
+    }
 
     /**
      * Create slug based on standard rules
@@ -59,15 +51,25 @@ class EasySlug
      */
     public function create($text)
     {
-        $this->text = strtolower(strtr($text, $this->rules));
-
-        $this->text = preg_replace('/[^a-z0-9]/', $this->replacement, $this->text);
-        $this->text = preg_replace("/[{$this->replacing}]+/", $this->replacement, $this->text);
-        $this->text = preg_replace('/('.$this->getSecureReplacement().')+/', $this->replacement, $this->text);
+        $this->text = $this->ruleManager->applyRules($text);
+        $pregReplacePatterns = array(
+            "/[^{$this->allowedCharacters}]/",
+            "/[{$this->replacing}]+/",
+            '/(' . $this->getSecureReplacement() . ')+/'
+        );
+        foreach($pregReplacePatterns as $pattern)
+        {
+            $this->text = preg_replace($pattern, $this->replacement, $this->text);
+        }
 
         $this->text = trim($this->text, " $this->replacement");
-
+        
         return $this;
+    }
+
+    protected function getSecureReplacement()
+    {
+        return addcslashes($this->replacement, '\^$.[]|()?*+{}');
     }
 
     /**
@@ -91,6 +93,7 @@ class EasySlug
     public function format($format = '%s', $arguments = array())
     {
         array_unshift($arguments, $this->text);
+
         return vsprintf($format, $arguments);
     }
 
@@ -104,8 +107,5 @@ class EasySlug
         $this->replacement = $replacement;
     }
 
-    protected function getSecureReplacement()
-    {
-        return addcslashes($this->replacement, '\^$.[]|()?*+{}');
-    }
+
 }
