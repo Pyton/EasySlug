@@ -7,7 +7,7 @@
             "email": "lukasz@piotrows.pl"
         }
     ],
-    "licence" : "MIT",
+    "license" : "MIT",
     "keywords": ["slug"],
     "homepage": "https://github.com/Pyton/EasySlug",
 

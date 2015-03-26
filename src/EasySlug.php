@@ -107,5 +107,15 @@ class EasySlug
         $this->replacement = $replacement;
     }
 
+    public static function get($text, $repl = null)
+    {
+    	$get = new static();
+    	if($repl !== null) $new->setReplacement($repl);
+    	return $get->create($text);
+    }
 
+    public function __toString()
+    {
+    	return $this->plain();
+    }
 }
