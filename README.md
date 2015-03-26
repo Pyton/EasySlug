@@ -42,7 +42,7 @@ echo $slug->format('%s.html') . PHP_EOL;
 use EasySlug\EasySlug as Slug;
 
 $string = 'Base Slug string.';
-$slug = $easySlug->create($string);
+
 
 echo Slug::get($string) . PHP_EOL;
 // base-slug-string
