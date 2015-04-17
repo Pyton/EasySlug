@@ -9,7 +9,7 @@ Using Composer, just require the pyton/easyslug package:
 ```json
 {
     "require": {
-        "pyton/easyslug": "dev-master"
+        "pyton/easyslug": "~1.0"
     }
 }
 ```
