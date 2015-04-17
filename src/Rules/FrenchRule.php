@@ -37,6 +37,10 @@ class FrenchRule extends RuleContract
         'Ù' => 'U',
         'Ü' => 'U',
         'Ÿ' => 'Y',
+        'œ' => 'oe',
+        'æ' => 'ae',
+        'Œ' => 'OE',
+        'Æ' => 'AE',
     );
 
     /**
