@@ -107,5 +107,24 @@ class EasySlug
         $this->replacement = $replacement;
     }
 
+    /**
+     * Construct class by static method
+     * 
+     * @param $text string Base text
+     * @param $prel string Replacement character eg: _ or -
+     * 
+     * @return $this
+     */
+    public static function get($text, $repl = null)
+    {
+    	$get = new static();
+    	if($repl !== null) $new->setReplacement($repl);
+    	return $get->create($text);
+    }
 
+
+    public function __toString()
+    {
+    	return $this->plain();
+    }
 }
