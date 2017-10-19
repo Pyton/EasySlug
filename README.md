@@ -1,9 +1,9 @@
-#EasySlug
+# EasySlug
 
-##Description
+## Description
 EasySlug is very simple class to making slug from base text.
 
-##Instalation
+## Instalation
 Using Composer, just require the pyton/easyslug package:
 
 ```json
@@ -14,7 +14,7 @@ Using Composer, just require the pyton/easyslug package:
 }
 ```
 
-##Usage
+## Usage
 ```php
 $easySlug = new EasySlug();
 
@@ -35,6 +35,3 @@ echo $slug->plain() . PHP_EOL;
 echo $slug->format('%s.html') . PHP_EOL;
 // base_slug_string.html
 ```
-
-##Credits
-Łukasz Piotrowski <lukasz@piotrows.pl>
